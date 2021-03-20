@@ -1,1 +1,9 @@
-
+server:
+  servlet:
+    context-path: "/api"
+logging:
+  level:
+    ROOT: info
+services:
+  buenBit:
+    host: "https://be.buenbit.com/api/market/tickers"

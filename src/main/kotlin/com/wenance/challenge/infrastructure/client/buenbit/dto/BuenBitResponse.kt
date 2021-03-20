@@ -1,14 +1,11 @@
 package com.wenance.challenge.infrastructure.client.buenbit.dto
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class BuenBitResponse(
     @JsonProperty(value = "object")
-    val data: String,
-    val errors: List<BuenBitError>
+    val data: BuenBitData
 ) {
     data class BuenBitData(
         val daiars: BuenBitDetail,
@@ -22,15 +19,11 @@ data class BuenBitResponse(
             @JsonProperty(value = "ask_currency")
             val askCurrency: String,
             @JsonProperty(value = "purchase_price")
-            val purchasePrice: BigDecimal,
+            val purchasePrice: String,
             @JsonProperty(value = "selling_price")
-            val sellingPrice: BigDecimal,
+            val sellingPrice: String,
             @JsonProperty(value = "market_identifier")
             val marketIdentifier: String
         )
     }
-
-    data class BuenBitError(
-        val message: String
-    )
 }
