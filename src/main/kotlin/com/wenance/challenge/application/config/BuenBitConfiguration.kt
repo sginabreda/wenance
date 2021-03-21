@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import java.util.Collections
 
 @Configuration
-class BuenBitConfiguration : BaseConfiguration() {
+class BuenBitConfiguration {
 
     @Bean
     fun buenBitWebClient(
@@ -29,7 +29,6 @@ class BuenBitConfiguration : BaseConfiguration() {
                 )
             }
             .defaultUriVariables(Collections.singletonMap("url", host))
-            .filters { listOf(logRequest(), logResponse()) }
             .build()
     }
 }

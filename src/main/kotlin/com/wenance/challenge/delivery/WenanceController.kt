@@ -8,7 +8,7 @@ import java.time.ZonedDateTime
 interface WenanceController {
     fun getBitcoinPrice(
         @DateTimeFormat(pattern = DATETIME_PATTERN)
-        from: ZonedDateTime
+        fromDate: ZonedDateTime
     ): BigDecimal
 
     fun getAveragePrice(
@@ -20,8 +20,8 @@ interface WenanceController {
 
     fun listResults(
         @DateTimeFormat(pattern = DATETIME_PATTERN)
-        from: ZonedDateTime?,
+        fromDate: ZonedDateTime?,
         @DateTimeFormat(pattern = DATETIME_PATTERN)
-        to: ZonedDateTime?
+        toDate: ZonedDateTime?
     )
 }

@@ -26,5 +26,6 @@ class BuenBitClient(private val buenBitWebClient: WebClient, private val mongoTe
 
         log.info(mapper.writeValueAsString(buenBitResponse))
         mongoTemplate.save(buenBitResponse!!)
+        TODO("Seleccionar las distintas crypto currencies y grabar solo eso con un timestamp? o grabar el objeto entero?")
     }
 }
