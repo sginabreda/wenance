@@ -1,5 +1,6 @@
 package com.wenance.challenge.application.config
 
+import com.wenance.challenge.infrastructure.client.buenbit.BuenBitClient
 import io.netty.channel.ChannelOption
 import io.netty.handler.ssl.SslContext
 import io.netty.handler.ssl.SslContextBuilder
@@ -22,6 +23,11 @@ import java.util.concurrent.TimeUnit
 class BuenBitConfiguration {
 
     private val timeout = 10000L
+
+    @Bean
+    fun buenBitClient(buenBitWebClient: WebClient): BuenBitClient {
+        return BuenBitClient(buenBitWebClient)
+    }
 
     @Bean
     fun buenBitWebClient(

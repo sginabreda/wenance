@@ -19,11 +19,16 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+	}
+	implementation("io.github.resilience4j:resilience4j-reactor:1.7.0")
+	implementation("io.github.resilience4j:resilience4j-all:1.7.0")
+
 }
 
 tasks.withType<KotlinCompile> {
