@@ -1,31 +1,25 @@
 package com.wenance.challenge.infrastructure.client.buenbit
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.wenance.challenge.infrastructure.client.buenbit.dto.BuenBitResponse
 import com.wenance.challenge.logger
-import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.http.MediaType
-import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
+import java.time.Duration
 
-@Component
-class BuenBitClient(private val buenBitWebClient: WebClient, private val mongoTemplate: MongoTemplate) {
+class BuenBitClient(private val buenBitWebClient: WebClient) {
 
-    private val mapper = ObjectMapper()
     private val log by logger()
 
-    @Scheduled(fixedRate = 5000)
-    fun getBuenBitResponse() {
-        val buenBitResponse = buenBitWebClient.get()
+    fun getBuenBitResponse(): Mono<BuenBitResponse> {
+        return buenBitWebClient.get()
             .accept(MediaType.APPLICATION_JSON)
             .acceptCharset(Charsets.UTF_8)
             .retrieve()
             .bodyToMono(BuenBitResponse::class.java)
-            .block()
-
-        log.info(mapper.writeValueAsString(buenBitResponse))
-        mongoTemplate.save(buenBitResponse!!)
-        TODO("Seleccionar las distintas crypto currencies y grabar solo eso con un timestamp? o grabar el objeto entero?")
+            .timeout(Duration.ofMillis(10_000))
+            .doOnError {
+                log.error("Error getting BuenBitResponse", it)
+            }
     }
 }

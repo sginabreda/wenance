@@ -1,9 +1,7 @@
 package com.wenance.challenge.infrastructure.client.buenbit.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.springframework.data.mongodb.core.mapping.Document
 
-@Document("buenBitResponse")
 data class BuenBitResponse(
     @JsonProperty(value = "object")
     val data: BuenBitData

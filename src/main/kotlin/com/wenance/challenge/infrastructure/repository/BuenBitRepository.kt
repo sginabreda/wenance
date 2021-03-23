@@ -1,6 +1,6 @@
 package com.wenance.challenge.infrastructure.repository
 
-import com.wenance.challenge.infrastructure.client.buenbit.dto.BuenBitResponse
-import org.springframework.data.mongodb.repository.MongoRepository
+import com.wenance.challenge.domain.entity.CryptoCurrencyInfo
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 
-interface BuenBitRepository : MongoRepository<BuenBitResponse, String>
+interface BuenBitRepository : ReactiveMongoRepository<CryptoCurrencyInfo, String>

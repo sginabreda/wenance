@@ -9,5 +9,6 @@ data class CryptoCurrencyInfo(
     val currency: CurrencyCode,
     val purchasePrice: BigDecimal,
     val sellingPrice: BigDecimal,
-    val marketId: String
+    val marketId: String,
+    val timestamp: Long
 )
