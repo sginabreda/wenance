@@ -11,7 +11,7 @@ class BuenBitClient(private val buenBitWebClient: WebClient) {
 
     private val log by logger()
 
-    fun getBuenBitResponse(): Mono<BuenBitResponse> {
+    fun getBuenBitResponse(): BuenBitResponse? {
         return buenBitWebClient.get()
             .accept(MediaType.APPLICATION_JSON)
             .acceptCharset(Charsets.UTF_8)
@@ -21,5 +21,6 @@ class BuenBitClient(private val buenBitWebClient: WebClient) {
             .doOnError {
                 log.error("Error getting BuenBitResponse", it)
             }
+            .block()
     }
 }

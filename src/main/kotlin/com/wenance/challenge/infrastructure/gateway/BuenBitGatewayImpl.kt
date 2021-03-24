@@ -11,16 +11,15 @@ class BuenBitGatewayImpl(private val buenBitClient: BuenBitClient) : BuenBitGate
 
     private val log by logger()
 
-    override fun listCryptoCurrencyInfo(): Mono<List<CryptoCurrencyInfo>> {
-        return buenBitClient.getBuenBitResponse()
-            .doOnNext { log.info("Working on ${it.data} ") }
-            .flatMap {
-                Mono.just(
-                    listOf(
-                        it.data.daiars.toCryptoCurrencyInfo(),
-                        it.data.daiusd.toCryptoCurrencyInfo(),
-                        it.data.btcars.toCryptoCurrencyInfo()
-                ))
+    override fun listCryptoCurrencyInfo(): List<CryptoCurrencyInfo> {
+        return buenBitClient.getBuenBitResponse()!!
+            .let {
+                log.info("Working on $it")
+                listOf(
+                    it.data.daiars.toCryptoCurrencyInfo(),
+                    it.data.daiusd.toCryptoCurrencyInfo(),
+                    it.data.btcars.toCryptoCurrencyInfo()
+                )
             }
     }
 }

@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.stream.Collectors
 
-class GetCryptoCurrencyInfo(
+class GetCryptoCurrencyInfoUseCase(
     private val buenBitGateway: BuenBitGateway,
     private val cryptoCurrencyRepository: BuenBitRepository
 ) {

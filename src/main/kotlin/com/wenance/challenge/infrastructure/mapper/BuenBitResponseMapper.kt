@@ -7,6 +7,7 @@ import com.wenance.challenge.infrastructure.client.buenbit.dto.BuenBitResponse
 import com.wenance.challenge.infrastructure.data.CryptoCurrencyValues
 import com.wenance.challenge.infrastructure.data.CurrencyValues
 import java.time.Instant
+import java.time.ZonedDateTime
 
 private val cryptoCurrencyMapper = mapOf(
     CryptoCurrencyValues.dai to CryptoCurrencyCode.DAI,
@@ -25,6 +26,6 @@ fun BuenBitResponse.BuenBitData.BuenBitDetail.toCryptoCurrencyInfo(): CryptoCurr
         purchasePrice = purchasePrice.toBigDecimal(),
         sellingPrice = sellingPrice.toBigDecimal(),
         marketId = marketIdentifier,
-        timestamp = Instant.now().toEpochMilli()
+        timestamp = ZonedDateTime.now().toEpochSecond()
     )
 }

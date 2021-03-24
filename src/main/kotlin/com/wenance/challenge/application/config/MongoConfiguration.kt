@@ -2,10 +2,11 @@ package com.wenance.challenge.application.config
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
-import com.mongodb.reactivestreams.client.MongoClient
-import com.mongodb.reactivestreams.client.MongoClients
+import com.mongodb.client.MongoClient
+import com.mongodb.client.MongoClients
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.mongodb.core.MongoTemplate
 
 @Configuration
 class MongoConfiguration {
@@ -18,5 +19,10 @@ class MongoConfiguration {
             .build()
 
         return MongoClients.create(mongoClientSettings)
+    }
+
+    @Bean
+    fun mongoTemplate(): MongoTemplate {
+        return MongoTemplate(mongoClient(), "test")
     }
 }

@@ -1,44 +1,53 @@
 package com.wenance.challenge.application.config
 
 import com.wenance.challenge.domain.external.gateway.BuenBitGateway
+import com.wenance.challenge.domain.external.gateway.WenanceGateway
 import com.wenance.challenge.domain.usecase.GetAveragePriceUseCase
 import com.wenance.challenge.domain.usecase.GetBitcoinPriceUseCase
-import com.wenance.challenge.domain.usecase.GetCryptoCurrencyInfo
+import com.wenance.challenge.domain.usecase.GetCryptoCurrencyInfoUseCase
 import com.wenance.challenge.domain.usecase.ListResultsUseCase
-import com.wenance.challenge.infrastructure.client.buenbit.BuenBitClient
-import com.wenance.challenge.infrastructure.gateway.BuenBitGatewayImpl
+import com.wenance.challenge.infrastructure.gateway.WenanceGatewayImpl
 import com.wenance.challenge.infrastructure.repository.BuenBitRepository
+import com.wenance.challenge.infrastructure.repository.WenanceRepository
+import com.wenance.challenge.infrastructure.repository.impl.WenanceRepositoryImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 
 @Configuration
 class WenanceConfiguration {
 
     @Bean
-    fun getBitcoinPrice(): GetBitcoinPriceUseCase {
-        return GetBitcoinPriceUseCase()
+    fun getBitcoinPrice(wenanceGateway: WenanceGateway): GetBitcoinPriceUseCase {
+        return GetBitcoinPriceUseCase(wenanceGateway)
     }
 
     @Bean
-    fun getAveragePrice(): GetAveragePriceUseCase {
-        return GetAveragePriceUseCase()
+    fun getAveragePrice(wenanceGateway: WenanceGateway): GetAveragePriceUseCase {
+        return GetAveragePriceUseCase(wenanceGateway)
     }
 
     @Bean
-    fun listResults(): ListResultsUseCase {
-        return ListResultsUseCase()
+    fun listResults(wenanceGateway: WenanceGateway): ListResultsUseCase {
+        return ListResultsUseCase(wenanceGateway)
     }
 
     @Bean
     fun getCryptoCurrencyInfo(
         buenBitGateway: BuenBitGateway,
         cryptoCurrencyRepository: BuenBitRepository
-    ): GetCryptoCurrencyInfo {
-        return GetCryptoCurrencyInfo(buenBitGateway, cryptoCurrencyRepository)
+    ): GetCryptoCurrencyInfoUseCase {
+        return GetCryptoCurrencyInfoUseCase(buenBitGateway, cryptoCurrencyRepository)
     }
 
     @Bean
-    fun buenBitGateway(buenBitClient: BuenBitClient): BuenBitGateway {
-        return BuenBitGatewayImpl(buenBitClient)
+    fun wenanceGateway(wenanceRepository: WenanceRepository): WenanceGateway {
+        return WenanceGatewayImpl(wenanceRepository)
+    }
+
+    @Bean
+    fun wenanceRepository(mongoTemplate: MongoTemplate): WenanceRepository {
+        return WenanceRepositoryImpl(mongoTemplate)
     }
 }
