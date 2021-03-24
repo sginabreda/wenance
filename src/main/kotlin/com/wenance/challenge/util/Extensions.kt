@@ -19,3 +19,7 @@ inline fun <reified R, reified T> R.toDto(): T {
     val constructor = klass.getConstructor(R::class.java)
     return constructor.newInstance(this) as T
 }
+
+inline fun <T : Any, R> T?.ifNotNull(callback: (T) -> R): R? {
+    return this?.let(callback)
+}
