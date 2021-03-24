@@ -40,7 +40,9 @@ class WenanceRepositoryImpl(private val mongoTemplate: MongoTemplate) : WenanceR
     }
 
     override fun listResults(fromDate: Long?, toDate: Long?): List<CryptoCurrencyInfo> {
-        TODO("Not yet implemented")
+        val query = Query(Criteria.where(""))
+
+        return mongoTemplate.find(query, CryptoCurrencyInfo::class.java)
     }
 
 }

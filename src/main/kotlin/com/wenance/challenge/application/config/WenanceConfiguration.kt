@@ -9,11 +9,11 @@ import com.wenance.challenge.domain.usecase.ListResultsUseCase
 import com.wenance.challenge.infrastructure.gateway.WenanceGatewayImpl
 import com.wenance.challenge.infrastructure.repository.BuenBitRepository
 import com.wenance.challenge.infrastructure.repository.WenanceRepository
+import com.wenance.challenge.infrastructure.repository.impl.BuenBitRepositoryImpl
 import com.wenance.challenge.infrastructure.repository.impl.WenanceRepositoryImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 
 @Configuration
 class WenanceConfiguration {
@@ -33,12 +33,18 @@ class WenanceConfiguration {
         return ListResultsUseCase(wenanceGateway)
     }
 
+
     @Bean
     fun getCryptoCurrencyInfo(
         buenBitGateway: BuenBitGateway,
         cryptoCurrencyRepository: BuenBitRepository
     ): GetCryptoCurrencyInfoUseCase {
         return GetCryptoCurrencyInfoUseCase(buenBitGateway, cryptoCurrencyRepository)
+    }
+
+    @Bean
+    fun buenBitRepository(mongoTemplate: MongoTemplate): BuenBitRepository {
+        return BuenBitRepositoryImpl(mongoTemplate)
     }
 
     @Bean

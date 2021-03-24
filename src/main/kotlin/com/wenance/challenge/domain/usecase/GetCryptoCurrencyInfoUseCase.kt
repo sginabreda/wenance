@@ -20,6 +20,6 @@ class GetCryptoCurrencyInfoUseCase(
     }
 
     private fun saveDetail(detail: CryptoCurrencyInfo): CryptoCurrencyInfo {
-        return cryptoCurrencyRepository.insert(detail)
+        return cryptoCurrencyRepository.insertRecord(detail)
     }
 }
