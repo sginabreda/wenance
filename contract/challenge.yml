@@ -1,0 +1,198 @@
+swagger: '2.0'
+info:
+  description: "Wenance Challenge"
+  title: Wenance Challenge
+  version: '1.0.0'
+basePath: /api
+tags:
+  - name: Operations
+    description: "Operations related to crypto currencies"
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /bitcoin-price:
+    get:
+      tags:
+        - Operations
+      summary: "Get the selling price of Bitcoin in ARS for a given timestamp."
+      description: "Get the selling price of Bitcoin in ARS for a given timestamp."
+      operationId: getBitcoinPrice
+      parameters:
+        - in: query
+          name: fromDate
+          description: "Example of format expected: 2021-01-03T10:48:00.000-03:00"
+          type: string
+          format: date
+          required: true
+      responses:
+        '200':
+          description: "The selling price of the bitcoin on the given timestamp"
+          schema:
+            $ref: "#/definitions/BitcoinPrice"
+        '404':
+          description: "Bitcoin price not found for given timestamp"
+          schema:
+            $ref: "#/definitions/ApiError"
+        '500':
+          description: "Error while processing the request"
+          schema:
+            $ref: "#/definitions/ApiError"
+  /average-price:
+    get:
+      tags:
+        - Operations
+      summary: "Get the average selling price between two dates for a given crypto currency."
+      description: "Get the average selling price between two dates for a given crypto currency."
+      operationId: getAveragePrice
+      parameters:
+        - in: query
+          name: cryptoCurrency
+          description: "Which crypto currency to look for"
+          type: string
+          enum:
+            - DAI
+            - BITCOIN
+          required: true
+        - in: query
+          name: currency
+          description: "Currency. Only required when the crypto currency is DAI"
+          type: string
+          enum:
+            - ARS
+            - USD
+          required: false
+        - in: query
+          name: fromDate
+          description: "Example of format expected: 2021-01-03T10:48:00.000-03:00"
+          type: string
+          format: date
+          required: true
+        - in: query
+          name: toDate
+          description: "Example of format expected: 2021-01-03T10:48:00.000-03:00"
+          type: string
+          format: date
+          required: true
+      responses:
+        '200':
+          description: "The average selling price"
+          schema:
+            $ref: "#/definitions/CryptoCurrencyAveragePrice"
+        '500':
+          description: "Error while processing the request"
+          schema:
+            $ref: "#/definitions/ApiError"
+  /results:
+    get:
+      tags:
+        - Operations
+      summary: "A paginated response listing the data between two dates"
+      description: "A paginated response listing the data between two dates"
+      operationId: listResults
+      parameters:
+        - in: query
+          name: fromDate
+          description: "Example of format expected: 2021-01-03T10:48:00.000-03:00"
+          type: string
+          format: date
+          required: false
+        - in: query
+          name: toDate
+          description: "Example of format expected: 2021-01-03T10:48:00.000-03:00"
+          type: string
+          format: date
+          required: false
+        - in: query
+          name: limit
+          description: "Limit for the amount of records to return"
+          type: integer
+          format: int32
+          default: 10
+          required: false
+        - in: query
+          name: offset
+          description: "Offset for the page of records"
+          type: integer
+          format: int32
+          default: 0
+          required: false
+      responses:
+        '200':
+          description: "A list of records"
+          schema:
+            type: object
+            properties:
+              records:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/definitions/CryptoCurrencyInfo"
+        '500':
+          description: "Error while processing the request"
+          schema:
+            $ref: "#/definitions/ApiError"
+definitions:
+  BitcoinPrice:
+    type: object
+    properties:
+      bitcoinPrice:
+        type: number
+        format: double
+        description: "Amount. Separation is a point"
+        example: 8109300.85
+  CryptoCurrencyAveragePrice:
+    type: object
+    properties:
+      averagePrice:
+        type: number
+        format: double
+        description: "Amount. Separation is a point"
+        example: 1.08
+  CryptoCurrencyInfo:
+    type: object
+    properties:
+      cryptoCurrency:
+        type: string
+        description: "Crypto currency"
+        enum:
+          - dai
+          - bitcoin
+        example: "dai"
+      currency:
+        type: string
+        description: "Currency"
+        enum:
+          - ars
+        example: "ars"
+      purchasePrice:
+        type: number
+        format: double
+        description: "Purchase price"
+        example: 8109300.00
+      sellingPrice:
+        type: number
+        format: double
+        description: "Selling price"
+        example: 8352600.00
+      marketId:
+        type: string
+        description: "Market id for the crypto currency"
+        example: "daiars"
+      timestamp:
+        type: string
+        format: datetime
+        description: "Datetime in which the request was made"
+        example: "2021-03-24T14:34:20.000-03:00"
+  ApiError:
+    type: object
+    properties:
+      code:
+        type: string
+        description: "Error code"
+        example: "not.found"
+      message:
+        type: string
+        description: "Error message"
+        example: "Bitcoin price was not found"
