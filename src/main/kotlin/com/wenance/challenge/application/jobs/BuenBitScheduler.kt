@@ -13,6 +13,6 @@ class BuenBitScheduler(private val getCryptoCurrencyInfoUseCase: GetCryptoCurren
     @Scheduled(fixedRate = 10_000)
     fun getCryptoCurrencyInfoSchedule() {
         log.info("Starting job...")
-        getCryptoCurrencyInfoUseCase().subscribe()
+        getCryptoCurrencyInfoUseCase()
     }
 }

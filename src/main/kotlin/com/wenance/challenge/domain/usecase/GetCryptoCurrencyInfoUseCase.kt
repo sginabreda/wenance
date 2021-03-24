@@ -4,9 +4,6 @@ import com.wenance.challenge.domain.entity.CryptoCurrencyInfo
 import com.wenance.challenge.domain.external.gateway.BuenBitGateway
 import com.wenance.challenge.infrastructure.repository.BuenBitRepository
 import com.wenance.challenge.logger
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
-import java.util.stream.Collectors
 
 class GetCryptoCurrencyInfoUseCase(
     private val buenBitGateway: BuenBitGateway,
@@ -14,15 +11,15 @@ class GetCryptoCurrencyInfoUseCase(
 ) {
     private val log by logger()
 
-    operator fun invoke(): Mono<MutableList<CryptoCurrencyInfo>> {
+    operator fun invoke() {
         return buenBitGateway.listCryptoCurrencyInfo()
-            .flatMapMany { Flux.fromIterable(it) }
-            .doOnNext { log.info("Working on ${it.cryptoCurrency} ${it.currency}") }
-            .flatMap { saveDetail(it) }
-            .collect(Collectors.toList())
+            .forEach {
+                log.info("Working on ${it.cryptoCurrency} ${it.currency}")
+                saveDetail(it)
+            }
     }
 
-    private fun saveDetail(detail: CryptoCurrencyInfo): Mono<CryptoCurrencyInfo> {
+    private fun saveDetail(detail: CryptoCurrencyInfo): CryptoCurrencyInfo {
         return cryptoCurrencyRepository.insert(detail)
     }
 }
