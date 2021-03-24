@@ -1,6 +1,8 @@
 package com.wenance.challenge.application.controller
 
 import com.wenance.challenge.delivery.WenanceController
+import com.wenance.challenge.delivery.dto.response.BitcoinAveragePriceDto
+import com.wenance.challenge.delivery.dto.response.BitcoinPriceDto
 import com.wenance.challenge.domain.usecase.GetAveragePriceUseCase
 import com.wenance.challenge.domain.usecase.GetBitcoinPriceUseCase
 import com.wenance.challenge.domain.usecase.ListResultsUseCase
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import java.math.BigDecimal
 import java.time.ZonedDateTime
 
 @Validated
@@ -23,14 +24,14 @@ class WenanceResource(
 
     @GetMapping("bitcoin-price")
     @ResponseStatus(HttpStatus.OK)
-    override fun getBitcoinPrice(@RequestParam fromDate: ZonedDateTime): BigDecimal {
-        return getBitcoinPriceUseCase(fromDate)
+    override fun getBitcoinPrice(@RequestParam fromDate: ZonedDateTime): BitcoinPriceDto {
+        return BitcoinPriceDto(getBitcoinPriceUseCase(fromDate))
     }
 
     @GetMapping("bitcoin-avg-price")
     @ResponseStatus(HttpStatus.OK)
-    override fun getAveragePrice(@RequestParam fromDate: ZonedDateTime, @RequestParam toDate: ZonedDateTime): BigDecimal {
-        return getAveragePriceUseCase(fromDate, toDate)
+    override fun getAveragePrice(@RequestParam fromDate: ZonedDateTime, @RequestParam toDate: ZonedDateTime): BitcoinAveragePriceDto {
+        return BitcoinAveragePriceDto(getAveragePriceUseCase(fromDate, toDate))
     }
 
     @GetMapping("results")
