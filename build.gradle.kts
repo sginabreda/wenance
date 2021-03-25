@@ -27,6 +27,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
+	testImplementation("org.mock-server:mockserver-netty:3.10.8")
+	testImplementation("org.mock-server:mockserver-client-java:3.10.8")
 
 }
 

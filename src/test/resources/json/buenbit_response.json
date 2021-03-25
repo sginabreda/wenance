@@ -1,0 +1,29 @@
+{
+  "object": {
+    "daiars": {
+      "currency": "ARS",
+      "bid_currency": "dai",
+      "ask_currency": "ars",
+      "purchase_price": "144.7",
+      "selling_price": "150.5",
+      "market_identifier": "daiars"
+    },
+    "daiusd": {
+      "currency": "USD",
+      "bid_currency": "dai",
+      "ask_currency": "usd",
+      "purchase_price": "1.04",
+      "selling_price": "1.07",
+      "market_identifier": "daiusd"
+    },
+    "btcars": {
+      "currency": "ARS",
+      "bid_currency": "btc",
+      "ask_currency": "ars",
+      "purchase_price": "7674500.0",
+      "selling_price": "7904700.0",
+      "market_identifier": "btcars"
+    }
+  },
+  "errors": []
+}
