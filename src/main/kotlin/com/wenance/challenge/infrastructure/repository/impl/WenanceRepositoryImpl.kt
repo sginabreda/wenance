@@ -11,14 +11,14 @@ import org.springframework.data.mongodb.core.query.Query
 
 class WenanceRepositoryImpl(private val mongoTemplate: MongoTemplate) : WenanceRepository {
 
-    override fun getBitcoinFromDate(timestamp: Long): List<CryptoCurrencyInfo> {
+    override fun getBitcoinFromDate(timestamp: Long): CryptoCurrencyInfo? {
         val query = Query(
             Criteria.where("timestamp")
                 .`is`(timestamp)
                 .and("cryptoCurrency")
                 .`is`("BITCOIN")
         )
-        return mongoTemplate.find(query, CryptoCurrencyInfo::class.java)
+        return mongoTemplate.findOne(query, CryptoCurrencyInfo::class.java)
     }
 
     override fun listCryptoCurrencies(

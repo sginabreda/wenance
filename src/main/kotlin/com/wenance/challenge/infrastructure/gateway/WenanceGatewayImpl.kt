@@ -10,7 +10,7 @@ import java.time.ZonedDateTime
 
 class WenanceGatewayImpl(private val wenanceRepository: WenanceRepository) : WenanceGateway {
 
-    override fun getBitcoinFromDate(fromDate: ZonedDateTime): List<CryptoCurrencyInfo> {
+    override fun getBitcoinFromDate(fromDate: ZonedDateTime): CryptoCurrencyInfo? {
         val fromDateEpoch = fromDate.toEpochSecond()
 
         return wenanceRepository.getBitcoinFromDate(fromDateEpoch)

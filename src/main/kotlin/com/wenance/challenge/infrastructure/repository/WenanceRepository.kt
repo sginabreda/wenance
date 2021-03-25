@@ -5,7 +5,7 @@ import com.wenance.challenge.domain.enums.CryptoCurrencyCode
 import com.wenance.challenge.domain.enums.CurrencyCode
 
 interface WenanceRepository {
-    fun getBitcoinFromDate(timestamp: Long): List<CryptoCurrencyInfo>
+    fun getBitcoinFromDate(timestamp: Long): CryptoCurrencyInfo?
 
     fun listCryptoCurrencies(
         cryptoCurrency: CryptoCurrencyCode,

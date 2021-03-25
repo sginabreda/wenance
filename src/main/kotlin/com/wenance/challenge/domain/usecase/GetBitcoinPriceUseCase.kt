@@ -9,11 +9,7 @@ import java.time.ZonedDateTime
 class GetBitcoinPriceUseCase(private val wenanceGateway: WenanceGateway) {
 
     operator fun invoke(fromDate: ZonedDateTime): BigDecimal {
-        return wenanceGateway.getBitcoinFromDate(fromDate)
-            .let {
-                if (it.isEmpty())
-                    throw RequestException("No bitcoin was found for given timestamp", "not.found", HttpStatus.NOT_FOUND.value())
-                it.first().sellingPrice
-            }
+        return wenanceGateway.getBitcoinFromDate(fromDate)?.sellingPrice
+            ?: throw RequestException("No bitcoin was found for given timestamp", "not.found", HttpStatus.NOT_FOUND.value())
     }
 }

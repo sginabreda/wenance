@@ -6,7 +6,7 @@ import com.wenance.challenge.domain.enums.CurrencyCode
 import java.time.ZonedDateTime
 
 interface WenanceGateway {
-    fun getBitcoinFromDate(fromDate: ZonedDateTime): List<CryptoCurrencyInfo>
+    fun getBitcoinFromDate(fromDate: ZonedDateTime): CryptoCurrencyInfo?
 
     fun listCryptoCurrencies(
         cryptoCurrency: CryptoCurrencyCode,
