@@ -1,0 +1,9 @@
+server:
+  servlet:
+    context-path: "/api"
+logging:
+  level:
+    ROOT: info
+services:
+  buenBit:
+    host: "http://localhost:8081/api/market/tickers"

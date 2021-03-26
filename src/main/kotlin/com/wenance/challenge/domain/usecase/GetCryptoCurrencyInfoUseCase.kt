@@ -7,7 +7,7 @@ import com.wenance.challenge.logger
 
 class GetCryptoCurrencyInfoUseCase(
     private val buenBitGateway: BuenBitGateway,
-    private val cryptoCurrencyRepository: BuenBitRepository
+    private val buenBitRepository: BuenBitRepository
 ) {
     private val log by logger()
 
@@ -20,6 +20,6 @@ class GetCryptoCurrencyInfoUseCase(
     }
 
     private fun saveDetail(detail: CryptoCurrencyInfo): CryptoCurrencyInfo {
-        return cryptoCurrencyRepository.insertRecord(detail)
+        return buenBitRepository.insertRecord(detail)
     }
 }
