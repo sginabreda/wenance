@@ -86,10 +86,10 @@ class WenanceResourceFunctionalTest {
     @Test
     fun `test get bitcoin price`() {
         // Given
-        val bitcoinPriceUrl = "$controller/bitcoin-price"
+        val bitcoinPriceUrl = "$controller/bitcoin-price?fromDate={fromDate}"
         val fromDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.of(ARGENTINE_TIME_ZONE))
             .toIsoStringDate()
-        val parameters = mapOf(
+        val parameters = mapOf<String, Any>(
             "fromDate" to fromDate
         )
 

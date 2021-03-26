@@ -28,8 +28,7 @@ class WenanceResource(
     @GetMapping("bitcoin-price")
     @ResponseStatus(HttpStatus.OK)
     override fun getBitcoinPrice(@RequestParam fromDate: ZonedDateTime): BitcoinPriceDto {
-        val zone = ZonedDateTime.now()
-        return BitcoinPriceDto(getBitcoinPriceUseCase(zone))
+        return BitcoinPriceDto(getBitcoinPriceUseCase(fromDate))
     }
 
     @GetMapping("average-price")

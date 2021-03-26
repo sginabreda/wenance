@@ -2,6 +2,7 @@ package com.wenance.challenge.application.exceptionhandler
 
 import com.wenance.challenge.delivery.dto.ApiError
 import com.wenance.challenge.domain.exception.RequestException
+import com.wenance.challenge.util.Constants.REQUIRED_PARAM
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -50,5 +51,19 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
 
             return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
         }
+    }
+
+    override fun handleExceptionInternal(
+        ex: java.lang.Exception,
+        body: Any?,
+        headers: HttpHeaders,
+        status: HttpStatus,
+        request: WebRequest
+    ): ResponseEntity<Any> {
+        if (REQUIRED_PARAM.toRegex().containsMatchIn(ex.message?.toUpperCase() ?: "")) {
+            val apiError = ApiError("bad.request", ex.message ?: "Bad request!")
+            return ResponseEntity(apiError, status)
+        }
+        return super.handleExceptionInternal(ex, body, headers, status, request)
     }
 }
